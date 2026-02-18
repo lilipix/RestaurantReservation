@@ -9,6 +9,7 @@ import connectDb from "./src/config/database.js";
 dotenv.config();
 const EXPRESS_HOST = process.env.EXPRESS_HOST || "localhost";
 const PORT = process.env.PORT || 5000;
+console.log("ENV MONGO_INIT_DB:", process.env.MONGO_INIT_DB);
 
 // Connect to MongoDB
 export const MONGO_USER = process.env.MONGO_USER || "mongo_user";
@@ -19,7 +20,8 @@ export const MONGO_PORT = process.env.MONGO_PORT || 27017;
 
 // Construct MongoDB URI
 const MONGO_URI = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_INIT_DB}?authSource=admin`;
-
+console.log("ENV DB:", process.env.MONGO_INIT_DB);
+console.log("Final DB used:", MONGO_INIT_DB);
 // Create Express app
 const app = express();
 

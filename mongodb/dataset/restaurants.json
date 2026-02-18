@@ -1,6 +1,5 @@
 [
   {
-    "_id": "resto_001",
     "name": "Le Jardin Parisien",
     "cuisine": "Française",
     "borough": "Paris",
@@ -44,7 +43,6 @@
     },
     "reservations": [
       {
-        "_id": "res_001",
         "customerName": "Jean Dupont",
         "date": "2026-02-20",
         "time": "19:30",
@@ -52,7 +50,6 @@
         "status": "confirmed"
       },
       {
-        "_id": "res_002",
         "customerName": "Sophie Martin",
         "date": "2026-02-20",
         "time": "19:30",
@@ -60,7 +57,6 @@
         "status": "confirmed"
       },
       {
-        "_id": "res_003",
         "customerName": "Lucas Bernard",
         "date": "2026-02-21",
         "time": "20:00",
@@ -71,7 +67,6 @@
   },
 
   {
-    "_id": "resto_002",
     "name": "Bella Napoli",
     "cuisine": "Italienne",
     "borough": "Lyon",
@@ -103,7 +98,6 @@
     },
     "reservations": [
       {
-        "_id": "res_004",
         "customerName": "Emma Robert",
         "date": "2026-02-20",
         "time": "20:00",
@@ -114,7 +108,6 @@
   },
 
   {
-    "_id": "resto_003",
     "name": "Sushi Tokyo",
     "cuisine": "Japonaise",
     "borough": "Marseille",

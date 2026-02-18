@@ -4,13 +4,11 @@ import mongoose from "mongoose";
 
 export const objectIdSchema = z
   .string()
-  .refine((val) => mongoose.Types.ObjectId.isValid(val), {
-    message: "Invalid ObjectId format",
-  });
+  .regex(/^[0-9a-fA-F]{24}$/, "Invalid ObjectId format");
 
 export const reservationIdSchema = z.object({
-  id: z.string(),
-  reservationId: objectIdSchema,
+  id: objectIdSchema, // restaurant _id
+  reservationId: objectIdSchema, // reservation _id
 });
 
 export const createReservationSchema = reservationBaseSchema;

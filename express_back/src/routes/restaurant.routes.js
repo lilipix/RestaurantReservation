@@ -67,7 +67,7 @@ RESERVATION ROUTES
 restaurant_router.get(
   "/:id/reservations",
   validateRestaurantId,
-  ReservationController.getReservationsByRestaurant,
+  ReservationController.getAllReservations,
 );
 
 restaurant_router.post(

@@ -20,9 +20,9 @@ class RestaurantController {
   static async getRestaurantById(req, res, next) {
     try {
       const restaurant_id = req.params.id;
-      if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
-        return ApiResponse.badRequest(res, "Invalid restaurant ID format");
-      }
+      // if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
+      //   return ApiResponse.badRequest(res, "Invalid restaurant ID format");
+      // }
       const restaurant =
         await RestaurantService.getRestaurantById(restaurant_id);
       ApiResponse.success(res, "Restaurant retrieved successfully", restaurant);
