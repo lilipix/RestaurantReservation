@@ -58,8 +58,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/restaurants", restaurant_router);
-app.use("/api/restaurants", restaurant_router);
-app.use("/api/reservations", reservation_router);
 // Route 404 (par défaut, doit être après toutes les autres routes)
 app.use((req, res) => {
   ApiResponse.notFound(res, "Endpoint not found");

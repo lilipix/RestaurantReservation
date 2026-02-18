@@ -8,16 +8,11 @@ import validate from "../middlewares/validate.middleware";
 import RestaurantController from "../controllers/restaurant.controller.js";
 
 import {
-  createRestaurantSchema,
-  updateRestaurantSchema,
-  restaurantIdSchema,
-} from "../validators/restaurant.validation";
-
-import {
   createReservationSchema,
   updateReservationSchema,
   reservationIdSchema,
 } from "../validators/reservation.validation";
+import ReservationController from "../controllers/reservation.controller.js";
 
 const restaurant_router = express.Router();
 
@@ -73,7 +68,7 @@ restaurant_router.post(
   "/:id/reservations",
   validateRestaurantId,
   validateCreateReservation,
-  RestaurantController.createReservation,
+  ReservationController.createReservation,
 );
 
 restaurant_router.put(
@@ -81,14 +76,14 @@ restaurant_router.put(
   validateRestaurantId,
   validateReservationId,
   validateUpdateReservation,
-  RestaurantController.updateReservation,
+  ReservationController.updateReservation,
 );
 
 restaurant_router.delete(
   "/:id/reservations/:reservationId",
   validateRestaurantId,
   validateReservationId,
-  RestaurantController.deleteReservation,
+  ReservationController.deleteReservation,
 );
 
 export default restaurant_router;
