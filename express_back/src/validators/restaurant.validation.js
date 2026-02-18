@@ -3,7 +3,16 @@ import { reservationSchema } from "./reservation.validation.js";
 
 export const createRestaurantSchema = z.object({
   name: z.string(),
-  address: z.string(),
+  cuisine: z.string(),
+  borough: z.string().optional(),
+  capacity: z.number().int().positive(),
+  address: z.object({
+    street: z.string(),
+    city: z.string(),
+    zipcode: z.string(),
+  }),
+  menu:z.object({
+    lastUpdate: z.string().datetime(),
   reservations: z.array(reservationSchema).optional(),
 });
 
