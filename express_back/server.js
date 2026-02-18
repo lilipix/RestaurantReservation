@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import ApiResponse from "./src/utils/apiResponse.js";
 import user_router from "./src/routes/user.routes.js";
+import restaurant_router from "./src/routes/restaurant.routes.js";
+import reservation_router from "./src/routes/reservation.routes.js";
 import connectDb from "./src/config/database.js";
 
 // Load environment variables from .env file
@@ -49,6 +51,8 @@ app.get("/", (req, res) => {
     version: "1.0.0",
     endpoints: {
       users: `http://${EXPRESS_HOST}:${PORT}/api/users`,
+      restaurants: `http://${EXPRESS_HOST}:${PORT}/api/restaurants`,
+      reservations: `http://${EXPRESS_HOST}:${PORT}/api/reservations`,
       stats: `http://${EXPRESS_HOST}:${PORT}/api/stats`,
       mongoExpress: `http://${EXPRESS_HOST}:8081/`,
     },
@@ -56,6 +60,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", user_router);
+app.use("/api/restaurants", restaurant_router);
+app.use("/api/reservations", reservation_router);
 // Route 404 (par défaut, doit être après toutes les autres routes)
 app.use((req, res) => {
   ApiResponse.notFound(res, "Endpoint not found");
