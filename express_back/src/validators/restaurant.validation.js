@@ -1,27 +1,23 @@
 import { z } from "zod";
-import { reservationSchema } from "./reservation.validation.js";
+import {
+  addressSchema,
+  menuSchema,
+  reservationBaseSchema,
+} from "./schemas.validation.js";
+
+export const restaurantIdSchema = z
+  .string()
+  .regex(/^resto_\d+$/, { message: "Invalid restaurant id format" });
 
 export const createRestaurantSchema = z.object({
-  name: z.string(),
-  cuisine: z.string(),
-  borough: z.string().optional(),
-  capacity: z.number().int().positive(),
-  address: z.object({
-    street: z.string(),
-    city: z.string(),
-    zipcode: z.string(),
-  }),
-  menu:z.object({
-    lastUpdate: z.string().datetime(),
-  reservations: z.array(reservationSchema).optional(),
+  _id: z.string().min(1),
+  name: z.string().min(1),
+  cuisine: z.string().min(1),
+  borough: z.string().min(1),
+  capacity: z.number().int().min(1),
+  address: addressSchema,
+  menu: menuSchema,
+  reservations: z.array(reservationBaseSchema).default([]),
 });
 
-export const updateRestaurantSchema = z.object({
-  name: z.string().optional(),
-  address: z.string().optional(),
-  reservations: z.array(reservationSchema).optional(),
-});
-
-export const restaurantIdSchema = z.object({
-  id: z.string().regex(/^[0-9a-fA-F]{24}$/, "ID invalide"),
-});
+export const updateRestaurantSchema = createRestaurantSchema.partial();

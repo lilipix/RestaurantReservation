@@ -1,44 +1,40 @@
 import { z } from "zod";
 
 /* =========================
-   ADDRESS
+ADDRESS
 ========================= */
-const addressSchema = z.object({
+export const addressSchema = z.object({
   street: z.string().min(1),
   city: z.string().min(1),
   zipcode: z.string().min(1),
 });
 
 /* =========================
-   MENU
+MENU
 ========================= */
-const menuItemSchema = z.object({
+export const menuItemSchema = z.object({
   name: z.string().min(1),
-  price: z.number().nonnegative(),
-  available: z.boolean(),
+  price: z.number().min(0),
+  available: z.boolean().default(true),
 });
 
-const categorySchema = z.object({
+export const categorySchema = z.object({
   name: z.string().min(1),
   items: z.array(menuItemSchema).min(1),
 });
 
-const menuSchema = z.object({
-  lastUpdate: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), { message: "Date invalide" }),
+export const menuSchema = z.object({
+  lastUpdate: z.coerce.date(),
   categories: z.array(categorySchema).min(1),
 });
 
 /* =========================
-   RESERVATION
+RESERVATION
 ========================= */
-const reservationBaseSchema = z.object({
+export const reservationBaseSchema = z.object({
   customerName: z.string().min(1),
-  date: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), { message: "Date invalide" }),
+  date: z.coerce.date(),
   time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
-  guests: z.number().int().positive(),
-  status: z.enum(["confirmed", "cancelled", "pending"]),
+  guests: z.number().int().min(1),
+  status: z.enum(["confirmed", "cancelled"]).default("confirmed"),
 });
