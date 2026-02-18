@@ -24,7 +24,7 @@ const MenuSchema = new Schema({
 // Schema pour les réservations
 const ReservationSchema = new Schema({
   customerName: { type: String, required: true },
-  date: { type: String, required: true }, // tu peux mettre Date si tu veux gérer Date JS
+  date: { type: String, required: true },
   time: { type: String, required: true },
   guests: { type: Number, required: true },
   status: {

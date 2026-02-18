@@ -1,67 +1,100 @@
 import { mongo } from "mongoose";
-import UserService from "../service/user.service";
+import RestaurantService from "../service/restaurant.service";
 import ApiResponse from "../utils/apiResponse";
 
-// The controller is responsible for handling incoming HTTP requests, calling the appropriate service methods, and sending back HTTP responses. It acts as a bridge between the routes and the service layer. It receives the request, extracts any necessary parameters or body data, calls the corresponding service method, and then formats the response to be sent back to the client. The controller should not contain business logic; it should delegate that to the service layer. It can also handle any necessary error handling and response formatting before sending the response back to the client.
-class UserController {
-  static async getAllUsers(req, res, next) {
+// Controller for restaurant-related HTTP endpoints. Delegates business logic to the service layer.
+class RestaurantController {
+  static async getAllRestaurants(req, res, next) {
     try {
-      const users = await UserService.getAllUsers();
-      ApiResponse.success(res, "Users retrieved successfully", users);
-    } catch (error) {
-      next(error); // Pass the error to the global error handler
-    }
-  }
-
-  static async getUserById(req, res, next) {
-    try {
-      const user_id = req.params.id;
-      const user = await UserService.getUserById(user_id);
-      ApiResponse.success(res, "User retrieved successfully", user);
-    } catch (error) {
-      next(error); // Pass the error to the global error handler
-    }
-  }
-
-  static async createUser(req, res, next) {
-    try {
-      const newUser = await UserService.createUser(req.body);
-      ApiResponse.success(res, "User created successfully", newUser);
+      const restaurants = await RestaurantService.getAllRestaurants();
+      ApiResponse.success(
+        res,
+        "Restaurants retrieved successfully",
+        restaurants,
+      );
     } catch (error) {
       next(error);
     }
   }
 
-  static async updateUser(req, res, next) {
+  static async getRestaurantById(req, res, next) {
     try {
-      const user_id = req.params.id;
-      const to_update_data = req.body;
-      // control
-      if (user_id !== to_update_data._id) {
+      const restaurant_id = req.params.id;
+      if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
+        return ApiResponse.badRequest(res, "Invalid restaurant ID format");
+      }
+      const restaurant =
+        await RestaurantService.getRestaurantById(restaurant_id);
+      ApiResponse.success(res, "Restaurant retrieved successfully", restaurant);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async createRestaurant(req, res, next) {
+    try {
+      const body = req.body || {};
+      if (!body.name) return ApiResponse.badRequest(res, "Name is required");
+      if (
+        !body.capacity ||
+        typeof body.capacity !== "number" ||
+        body.capacity < 1
+      )
         return ApiResponse.badRequest(
           res,
-          "User ID in the URL does not match ID in the body",
-          400,
+          "Capacity must be a positive number",
         );
-      }
-      if (!mongo.Types.ObjectId.isValid(user_id)) {
-        return ApiResponse.badRequest(res, "Invalid user ID format", 400);
-      }
-      const updatedUser = await UserService.updateUser(user_id, to_update_data);
-      ApiResponse.success(res, "User updated successfully", updatedUser);
+
+      const newRestaurant = await RestaurantService.createRestaurant(body);
+      ApiResponse.created(
+        res,
+        "Restaurant created successfully",
+        newRestaurant,
+      );
     } catch (error) {
       next(error);
     }
   }
 
-  static async deleteUser(req, res, next) {
+  static async updateRestaurant(req, res, next) {
     try {
-      await UserService.deleteUser(req.params.id);
-      ApiResponse.success(res, "User deleted successfully");
+      const restaurant_id = req.params.id;
+      const to_update_data = req.body;
+      if (restaurant_id !== to_update_data._id) {
+        return ApiResponse.badRequest(
+          res,
+          "Restaurant ID in the URL does not match ID in the body",
+        );
+      }
+      if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
+        return ApiResponse.badRequest(res, "Invalid restaurant ID format");
+      }
+      const updatedRestaurant = await RestaurantService.updateRestaurant(
+        restaurant_id,
+        to_update_data,
+      );
+      ApiResponse.success(
+        res,
+        "Restaurant updated successfully",
+        updatedRestaurant,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteRestaurant(req, res, next) {
+    try {
+      const id = req.params.id;
+      if (!mongo.Types.ObjectId.isValid(id)) {
+        return ApiResponse.badRequest(res, "Invalid restaurant ID format");
+      }
+      await RestaurantService.deleteRestaurant(id);
+      ApiResponse.success(res, "Restaurant deleted successfully");
     } catch (error) {
       next(error);
     }
   }
 }
 
-export default UserController;
+export default RestaurantController;

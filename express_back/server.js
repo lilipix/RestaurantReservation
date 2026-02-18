@@ -49,6 +49,7 @@ app.get("/", (req, res) => {
   ApiResponse.success(res, "API Express + MongoDP op", {
     version: "1.0.0",
     endpoints: {
+      users: `http://${EXPRESS_HOST}:${PORT}/api/users`,
       restaurants: `http://${EXPRESS_HOST}:${PORT}/api/restaurants`,
       reservations: `http://${EXPRESS_HOST}:${PORT}/api/restaurants/:id/reservations`,
       mongoExpress: `http://${EXPRESS_HOST}:8081/`,
@@ -57,6 +58,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/restaurants", restaurant_router);
+app.use("/api/restaurants", restaurant_router);
+app.use("/api/reservations", reservation_router);
 // Route 404 (par défaut, doit être après toutes les autres routes)
 app.use((req, res) => {
   ApiResponse.notFound(res, "Endpoint not found");
