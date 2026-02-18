@@ -6,33 +6,37 @@ const { Schema, model } = mongoose;
 const MenuItemSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
-  available: { type: Boolean, default: true }
+  available: { type: Boolean, default: true },
 });
 
 // Schema pour les catégories du menu
 const CategorySchema = new Schema({
   name: { type: String, required: true },
-  items: [MenuItemSchema]
+  items: [MenuItemSchema],
 });
 
 // Schema pour le menu
 const MenuSchema = new Schema({
   lastUpdate: { type: Date, default: Date.now },
-  categories: [CategorySchema]
+  categories: [CategorySchema],
 });
 
 // Schema pour les réservations
 const ReservationSchema = new Schema({
   customerName: { type: String, required: true },
-  date: { type: String, required: true }, 
+  date: { type: String, required: true },
   time: { type: String, required: true },
   guests: { type: Number, required: true },
-  status: { type: String, enum: ["confirmed", "cancelled"], default: "confirmed" }
+  status: {
+    type: String,
+    enum: ["confirmed", "cancelled"],
+    default: "confirmed",
+  },
 });
 
 // Schema principal pour le restaurant
 const RestaurantSchema = new Schema({
-  _id: { type: String, required: true }, 
+  _id: { type: String, required: true },
   name: { type: String, required: true },
   cuisine: { type: String, required: true },
   borough: { type: String, required: true },
@@ -40,10 +44,10 @@ const RestaurantSchema = new Schema({
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
-    zipcode: { type: String, required: true }
+    zipcode: { type: String, required: true },
   },
   menu: MenuSchema,
-  reservations: [ReservationSchema]
+  reservations: [ReservationSchema],
 });
 
 // Export du modèle

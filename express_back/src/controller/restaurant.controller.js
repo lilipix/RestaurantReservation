@@ -7,7 +7,11 @@ class RestaurantController {
   static async getAllRestaurants(req, res, next) {
     try {
       const restaurants = await RestaurantService.getAllRestaurants();
-      ApiResponse.success(res, "Restaurants retrieved successfully", restaurants);
+      ApiResponse.success(
+        res,
+        "Restaurants retrieved successfully",
+        restaurants,
+      );
     } catch (error) {
       next(error);
     }
@@ -19,7 +23,8 @@ class RestaurantController {
       if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
         return ApiResponse.badRequest(res, "Invalid restaurant ID format");
       }
-      const restaurant = await RestaurantService.getRestaurantById(restaurant_id);
+      const restaurant =
+        await RestaurantService.getRestaurantById(restaurant_id);
       ApiResponse.success(res, "Restaurant retrieved successfully", restaurant);
     } catch (error) {
       next(error);
@@ -30,11 +35,22 @@ class RestaurantController {
     try {
       const body = req.body || {};
       if (!body.name) return ApiResponse.badRequest(res, "Name is required");
-      if (!body.capacity || typeof body.capacity !== "number" || body.capacity < 1)
-        return ApiResponse.badRequest(res, "Capacity must be a positive number");
+      if (
+        !body.capacity ||
+        typeof body.capacity !== "number" ||
+        body.capacity < 1
+      )
+        return ApiResponse.badRequest(
+          res,
+          "Capacity must be a positive number",
+        );
 
       const newRestaurant = await RestaurantService.createRestaurant(body);
-      ApiResponse.created(res, "Restaurant created successfully", newRestaurant);
+      ApiResponse.created(
+        res,
+        "Restaurant created successfully",
+        newRestaurant,
+      );
     } catch (error) {
       next(error);
     }
@@ -57,7 +73,11 @@ class RestaurantController {
         restaurant_id,
         to_update_data,
       );
-      ApiResponse.success(res, "Restaurant updated successfully", updatedRestaurant);
+      ApiResponse.success(
+        res,
+        "Restaurant updated successfully",
+        updatedRestaurant,
+      );
     } catch (error) {
       next(error);
     }
