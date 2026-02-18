@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
-import ReservationService from "../service/reservation.service";
-import ApiResponse from "../utils/apiResponse";
+import ReservationService from "../service/reservation.service.js";
+import ApiResponse from "../utils/apiResponse.js";
 
 class ReservationController {
   static async getAllReservations(req, res, next) {
     try {
       const reservations = await ReservationService.getAllReservations();
-      ApiResponse.success(res, "Reservations retrieved successfully", reservations);
+      ApiResponse.success(
+        res,
+        "Reservations retrieved successfully",
+        reservations,
+      );
     } catch (error) {
       next(error);
     }
@@ -16,7 +20,11 @@ class ReservationController {
     try {
       const id = req.params.id;
       const reservation = await ReservationService.getReservationById(id);
-      ApiResponse.success(res, "Reservation retrieved successfully", reservation);
+      ApiResponse.success(
+        res,
+        "Reservation retrieved successfully",
+        reservation,
+      );
     } catch (error) {
       next(error);
     }
@@ -24,8 +32,14 @@ class ReservationController {
 
   static async createReservation(req, res, next) {
     try {
-      const newReservation = await ReservationService.createReservation(req.body);
-      ApiResponse.success(res, "Reservation created successfully", newReservation);
+      const newReservation = await ReservationService.createReservation(
+        req.body,
+      );
+      ApiResponse.success(
+        res,
+        "Reservation created successfully",
+        newReservation,
+      );
     } catch (error) {
       next(error);
     }
@@ -43,7 +57,11 @@ class ReservationController {
         );
       }
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return ApiResponse.badRequest(res, "Invalid reservation ID format", 400);
+        return ApiResponse.badRequest(
+          res,
+          "Invalid reservation ID format",
+          400,
+        );
       }
       const updated = await ReservationService.updateReservation(id, to_update);
       ApiResponse.success(res, "Reservation updated successfully", updated);

@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import ApiResponse from "./src/utils/apiResponse.js";
-import reservation_router from "./src/routes/reservation.routes.js";
 import restaurant_router from "./src/routes/restaurant.routes.js";
 import connectDb from "./src/config/database.js";
 
@@ -14,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 export const MONGO_USER = process.env.MONGO_USER || "mongo_user";
 export const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "example1234";
-export const MONGO_INIT_DB = process.env.MONGO_INIT_DB || "express_db";
+export const MONGO_INIT_DB = process.env.MONGO_INIT_DB || "db_test";
 export const MONGO_HOST = process.env.MONGO_HOST || "localhost";
 export const MONGO_PORT = process.env.MONGO_PORT || 27017;
 

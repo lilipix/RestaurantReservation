@@ -1,4 +1,4 @@
-import UserRepository from "../repository/user.repository";
+import UserRepository from "../repository/user.repository.js";
 
 // business logic of the application. It interacts with the repository to perform database operations and can also include additional logic such as validation, data transformation, etc.
 class UserService {

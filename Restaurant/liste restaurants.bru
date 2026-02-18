@@ -1,0 +1,15 @@
+meta {
+  name: liste restaurants
+  type: http
+  seq: 1
+}
+
+get {
+  url: localhost:5000/restaurants
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

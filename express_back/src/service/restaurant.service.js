@@ -1,4 +1,4 @@
-import RestaurantRepository from "../repository/restaurant.repository";
+import RestaurantRepository from "../repository/restaurant.repository.js";
 
 class RestaurantService {
   static async getAllRestaurants() {
