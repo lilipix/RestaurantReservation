@@ -1,4 +1,4 @@
-import RestaurantModel from "../model/restaurant.model";
+import RestaurantModel from "../model/restaurant.model.js";
 
 class RestaurantRepository {
   static async findAll() {

@@ -1,6 +1,6 @@
 import { mongo } from "mongoose";
-import RestaurantService from "../service/restaurant.service";
-import ApiResponse from "../utils/apiResponse";
+import RestaurantService from "../service/restaurant.service.js";
+import ApiResponse from "../utils/apiResponse.js";
 
 // Controller for restaurant-related HTTP endpoints. Delegates business logic to the service layer.
 class RestaurantController {

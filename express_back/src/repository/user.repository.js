@@ -1,4 +1,4 @@
-import UserModel from "../model/user.model";
+import UserModel from "../model/user.model.js";
 
 // interact with the database using the UserModel and provide methods to be called from the controller
 class UserRepository {

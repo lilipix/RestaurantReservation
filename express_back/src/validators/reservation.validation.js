@@ -1,4 +1,4 @@
-import { reservationBaseSchema } from "./schemas.validation";
+import { reservationBaseSchema } from "./schemas.validation.js";
 import { z } from "zod";
 import mongoose from "mongoose";
 

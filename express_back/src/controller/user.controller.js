@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import UserService from "../service/user.service";
-import ApiResponse from "../utils/apiResponse";
+import UserService from "../service/user.service.js";
+import ApiResponse from "../utils/apiResponse.js";
 
 // The controller is responsible for handling incoming HTTP requests, calling the appropriate service methods, and sending back HTTP responses. It acts as a bridge between the routes and the service layer. It receives the request, extracts any necessary parameters or body data, calls the corresponding service method, and then formats the response to be sent back to the client. The controller should not contain business logic; it should delegate that to the service layer. It can also handle any necessary error handling and response formatting before sending the response back to the client.
 class UserController {

@@ -1,145 +1,149 @@
 [
-{
-  "_id": "resto_001",
-  "name": "Le Jardin Parisien",
-  "cuisine": "Française",
-  "borough": "Paris",
-  "capacity": 40,
-  "address": {
-    "street": "12 Rue de Rivoli",
-    "city": "Paris",
-    "zipcode": "75001"
-  },
-  "menu": {
-    "lastUpdate": "2026-02-15",
-    "categories": [
-      {
-        "name": "Entrées",
-        "items": [
-          { "name": "Burrata & tomates", "price": 9, "available": true },
-          { "name": "Soupe à l’oignon", "price": 8, "available": true },
-          { "name": "Carpaccio de bœuf", "price": 11, "available": true }
-        ]
-      },
-      {
-        "name": "Plats",
-        "items": [
-          { "name": "Entrecôte grillée", "price": 22, "available": true },
-          { "name": "Risotto aux champignons", "price": 17, "available": true },
-          { "name": "Filet de bar", "price": 23, "available": false }
-        ]
-      },
-      {
-        "name": "Desserts",
-        "items": [
-          { "name": "Fondant au chocolat", "price": 8, "available": true },
-          { "name": "Crème brûlée", "price": 7, "available": true }
-        ]
-      }
-    ]
-  },
-  "reservations": [
-    {
-      "_id": "res_001",
-      "customerName": "Jean Dupont",
-      "date": "2026-02-20",
-      "time": "19:30",
-      "guests": 6,
-      "status": "confirmed"
+  {
+    "_id": "resto_001",
+    "name": "Le Jardin Parisien",
+    "cuisine": "Française",
+    "borough": "Paris",
+    "capacity": 40,
+    "address": {
+      "street": "12 Rue de Rivoli",
+      "city": "Paris",
+      "zipcode": "75001"
     },
-    {
-      "_id": "res_002",
-      "customerName": "Sophie Martin",
-      "date": "2026-02-20",
-      "time": "19:30",
-      "guests": 10,
-      "status": "confirmed"
+    "menu": {
+      "lastUpdate": "2026-02-15",
+      "categories": [
+        {
+          "name": "Entrées",
+          "items": [
+            { "name": "Burrata & tomates", "price": 9, "available": true },
+            { "name": "Soupe à l’oignon", "price": 8, "available": true },
+            { "name": "Carpaccio de bœuf", "price": 11, "available": true }
+          ]
+        },
+        {
+          "name": "Plats",
+          "items": [
+            { "name": "Entrecôte grillée", "price": 22, "available": true },
+            {
+              "name": "Risotto aux champignons",
+              "price": 17,
+              "available": true
+            },
+            { "name": "Filet de bar", "price": 23, "available": false }
+          ]
+        },
+        {
+          "name": "Desserts",
+          "items": [
+            { "name": "Fondant au chocolat", "price": 8, "available": true },
+            { "name": "Crème brûlée", "price": 7, "available": true }
+          ]
+        }
+      ]
     },
-    {
-      "_id": "res_003",
-      "customerName": "Lucas Bernard",
-      "date": "2026-02-21",
-      "time": "20:00",
-      "guests": 8,
-      "status": "confirmed"
-    }
-  ]
-},
-
-{
-  "_id": "resto_002",
-  "name": "Bella Napoli",
-  "cuisine": "Italienne",
-  "borough": "Lyon",
-  "capacity": 30,
-  "address": {
-    "street": "8 Rue Mercière",
-    "city": "Lyon",
-    "zipcode": "69002"
-  },
-  "menu": {
-    "lastUpdate": "2026-02-16",
-    "categories": [
+    "reservations": [
       {
-        "name": "Pizzas",
-        "items": [
-          { "name": "Margherita", "price": 10, "available": true },
-          { "name": "Quattro Formaggi", "price": 12, "available": true },
-          { "name": "Diavola", "price": 13, "available": true }
-        ]
+        "_id": "res_001",
+        "customerName": "Jean Dupont",
+        "date": "2026-02-20",
+        "time": "19:30",
+        "guests": 6,
+        "status": "confirmed"
       },
       {
-        "name": "Pâtes",
-        "items": [
-          { "name": "Carbonara", "price": 14, "available": true },
-          { "name": "Lasagnes", "price": 15, "available": true }
-        ]
+        "_id": "res_002",
+        "customerName": "Sophie Martin",
+        "date": "2026-02-20",
+        "time": "19:30",
+        "guests": 10,
+        "status": "confirmed"
+      },
+      {
+        "_id": "res_003",
+        "customerName": "Lucas Bernard",
+        "date": "2026-02-21",
+        "time": "20:00",
+        "guests": 8,
+        "status": "confirmed"
       }
     ]
   },
-  "reservations": [
-    {
-      "_id": "res_004",
-      "customerName": "Emma Robert",
-      "date": "2026-02-20",
-      "time": "20:00",
-      "guests": 12,
-      "status": "confirmed"
-    }
-  ]
-},
 
-{
-  "_id": "resto_003",
-  "name": "Sushi Tokyo",
-  "cuisine": "Japonaise",
-  "borough": "Marseille",
-  "capacity": 25,
-  "address": {
-    "street": "22 Rue Paradis",
-    "city": "Marseille",
-    "zipcode": "13001"
-  },
-  "menu": {
-    "lastUpdate": "2026-02-17",
-    "categories": [
+  {
+    "_id": "resto_002",
+    "name": "Bella Napoli",
+    "cuisine": "Italienne",
+    "borough": "Lyon",
+    "capacity": 30,
+    "address": {
+      "street": "8 Rue Mercière",
+      "city": "Lyon",
+      "zipcode": "69002"
+    },
+    "menu": {
+      "lastUpdate": "2026-02-16",
+      "categories": [
+        {
+          "name": "Pizzas",
+          "items": [
+            { "name": "Margherita", "price": 10, "available": true },
+            { "name": "Quattro Formaggi", "price": 12, "available": true },
+            { "name": "Diavola", "price": 13, "available": true }
+          ]
+        },
+        {
+          "name": "Pâtes",
+          "items": [
+            { "name": "Carbonara", "price": 14, "available": true },
+            { "name": "Lasagnes", "price": 15, "available": true }
+          ]
+        }
+      ]
+    },
+    "reservations": [
       {
-        "name": "Sushis",
-        "items": [
-          { "name": "California Roll", "price": 12, "available": true },
-          { "name": "Saumon Nigiri", "price": 14, "available": true },
-          { "name": "Dragon Roll", "price": 16, "available": true }
-        ]
-      },
-      {
-        "name": "Boissons",
-        "items": [
-          { "name": "Thé vert", "price": 3, "available": true },
-          { "name": "Saké", "price": 6, "available": true }
-        ]
+        "_id": "res_004",
+        "customerName": "Emma Robert",
+        "date": "2026-02-20",
+        "time": "20:00",
+        "guests": 12,
+        "status": "confirmed"
       }
     ]
   },
-  "reservations": []
-}
+
+  {
+    "_id": "resto_003",
+    "name": "Sushi Tokyo",
+    "cuisine": "Japonaise",
+    "borough": "Marseille",
+    "capacity": 25,
+    "address": {
+      "street": "22 Rue Paradis",
+      "city": "Marseille",
+      "zipcode": "13001"
+    },
+    "menu": {
+      "lastUpdate": "2026-02-17",
+      "categories": [
+        {
+          "name": "Sushis",
+          "items": [
+            { "name": "California Roll", "price": 12, "available": true },
+            { "name": "Saumon Nigiri", "price": 14, "available": true },
+            { "name": "Dragon Roll", "price": 16, "available": true }
+          ]
+        },
+        {
+          "name": "Boissons",
+          "items": [
+            { "name": "Thé vert", "price": 3, "available": true },
+            { "name": "Saké", "price": 6, "available": true }
+          ]
+        }
+      ]
+    },
+    "reservations": []
+  }
 ]

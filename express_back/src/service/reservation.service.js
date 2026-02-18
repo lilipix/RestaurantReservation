@@ -1,5 +1,5 @@
-import ReservationRepository from "../repository/reservation.repository";
-import RestaurantRepository from "../repository/restaurant.repository";
+import ReservationRepository from "../repository/reservation.repository.js";
+import RestaurantRepository from "../repository/restaurant.repository.js";
 
 function startOfDay(date) {
   const d = new Date(date);
@@ -39,7 +39,10 @@ class ReservationService {
       dayStart,
       dayEnd,
     );
-    const reservedCovers = existing.reduce((sum, r) => sum + (r.covers || 0), 0);
+    const reservedCovers = existing.reduce(
+      (sum, r) => sum + (r.covers || 0),
+      0,
+    );
     if (reservedCovers + data.covers > restaurant.capacity) {
       throw new Error("Not enough capacity for the selected day");
     }

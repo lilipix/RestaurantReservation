@@ -3,16 +3,16 @@ import {
   createRestaurantSchema,
   restaurantIdSchema,
   updateRestaurantSchema,
-} from "../validators/restaurant.validation";
-import validate from "../middlewares/validate.middleware";
-import RestaurantController from "../controllers/restaurant.controller.js";
+} from "../validators/restaurant.validation.js";
+import validate from "../middlewares/validate.middleware.js";
 
 import {
   createReservationSchema,
   updateReservationSchema,
   reservationIdSchema,
-} from "../validators/reservation.validation";
-import ReservationController from "../controllers/reservation.controller.js";
+} from "../validators/reservation.validation.js";
+import ReservationController from "../controller/reservation.controller.js";
+import RestaurantController from "../controller/restaurant.controller.js";
 
 const restaurant_router = express.Router();
 
@@ -63,6 +63,12 @@ restaurant_router.post(
 /* =========================
 RESERVATION ROUTES
 ========================= */
+
+restaurant_router.get(
+  "/:id/reservations",
+  validateRestaurantId,
+  ReservationController.getReservationsByRestaurant,
+);
 
 restaurant_router.post(
   "/:id/reservations",

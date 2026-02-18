@@ -1,16 +1,16 @@
-import ReservationModel from "../model/reservation.model";
+import RestaurantModel from "../model/restaurant.model.js";
 
 class ReservationRepository {
   static async findAll() {
-    return await ReservationModel.find().populate("restaurant user");
+    return await RestaurantModel.find().populate("restaurant user");
   }
 
   static async findById(id) {
-    return await ReservationModel.findById(id).populate("restaurant user");
+    return await RestaurantModel.findById(id).populate("restaurant user");
   }
 
   static async findByRestaurantAndDay(restaurantId, dayStart, dayEnd) {
-    return await ReservationModel.find({
+    return await RestaurantModel.find({
       restaurant: restaurantId,
       date: { $gte: dayStart, $lte: dayEnd },
       status: { $ne: "cancelled" },
