@@ -1,4 +1,4 @@
-import { mongo } from "mongoose";
+import mongoose from "mongoose";
 import UserService from "../service/user.service";
 import ApiResponse from "../utils/apiResponse";
 
