@@ -1,3 +1,0 @@
-db.airbnb.find({"review_scores_rating":{ $gt: 4 }}, {_id: 0,  host_name: 1, })
-au moins 2 lits, prix entre 50 et 150 afficher nom localisation et trier du moins cher au plus cher
-db.airbnb.find
