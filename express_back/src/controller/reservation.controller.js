@@ -1,4 +1,4 @@
-import { mongo } from "mongoose";
+import mongoose from "mongoose";
 import ReservationService from "../service/reservation.service";
 import ApiResponse from "../utils/apiResponse";
 
@@ -42,7 +42,7 @@ class ReservationController {
           400,
         );
       }
-      if (!mongo.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
         return ApiResponse.badRequest(res, "Invalid reservation ID format", 400);
       }
       const updated = await ReservationService.updateReservation(id, to_update);
