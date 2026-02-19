@@ -1,0 +1,15 @@
+info:
+  name: delete restaurant
+  type: http
+  seq: 11
+
+http:
+  method: DELETE
+  url: http://localhost:5000/api/restaurants/6996cf54d712406f81133705
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
