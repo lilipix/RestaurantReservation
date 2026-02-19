@@ -2,7 +2,17 @@ import RestaurantModel from "../model/restaurant.model.js";
 
 class RestaurantRepository {
   static async findAll() {
-    return await RestaurantModel.find();
+    // return await RestaurantModel.find();
+    const restaurants = await RestaurantModel.find();
+
+    restaurants.forEach((r) => {
+      console.log(
+        r.name,
+        r.reservations.map((res) => res._id.toString()),
+      );
+    });
+
+    return restaurants;
   }
 
   static async findById(id) {

@@ -1,11 +1,11 @@
 info:
-  name: delete restaurant
+  name: Get all reservations
   type: http
-  seq: 11
+  seq: 13
 
 http:
-  method: DELETE
-  url: http://localhost:5000/api/restaurants/6996e8d67647f3e477251624
+  method: GET
+  url: http://localhost:5000/api/restaurants/reservations
   auth: inherit
 
 settings:

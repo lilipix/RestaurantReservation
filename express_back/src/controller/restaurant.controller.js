@@ -7,6 +7,7 @@ class RestaurantController {
   static async getAllRestaurants(req, res, next) {
     try {
       const restaurants = await RestaurantService.getAllRestaurants();
+      console.log(restaurants[0].reservations.map((r) => r._id.toString()));
       ApiResponse.success(
         res,
         "Restaurants retrieved successfully",

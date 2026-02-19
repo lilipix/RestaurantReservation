@@ -14,7 +14,7 @@ http:
             "city": "Paris",
             "zipcode": "69002"
           },
-          "name": "Test",
+          "name": "Test POST",
           "cuisine": "Italienne",
           "borough": "Lyon",
           "capacity": 30,

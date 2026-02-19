@@ -5,7 +5,7 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:5000/api/restaurants/6996cf54d712406f81133705
+  url: http://localhost:5000/api/restaurants/699720937538852042cc65f6
   body:
     type: json
     data: |+

@@ -29,9 +29,50 @@ const validateReservationId = validate(reservationIdSchema, "params");
 const validateCreateReservation = validate(createReservationSchema, "body");
 const validateUpdateReservation = validate(updateReservationSchema, "body");
 
-/* =========================
-RESTAURANT ROUTES
-========================= */
+restaurant_router.get(
+  "/reservations",
+  ReservationController.getAllReservations,
+);
+
+restaurant_router.get("/", RestaurantController.getAllRestaurants);
+
+restaurant_router.post(
+  "/",
+  validateCreateRestaurant,
+  RestaurantController.createRestaurant,
+);
+
+restaurant_router.get(
+  "/:id/reservations",
+  validateRestaurantId,
+  ReservationController.getReservationsByRestaurant,
+);
+
+restaurant_router.get(
+  "/:id/reservations/:reservationId",
+  validateReservationId,
+  ReservationController.getReservationById,
+);
+
+restaurant_router.post(
+  "/:id/reservations",
+  validateRestaurantId,
+  validateCreateReservation,
+  ReservationController.createReservation,
+);
+
+restaurant_router.put(
+  "/:id/reservations/:reservationId",
+  validateReservationId,
+  validateUpdateReservation,
+  ReservationController.updateReservation,
+);
+
+restaurant_router.delete(
+  "/:id/reservations/:reservationId",
+  validateReservationId,
+  ReservationController.deleteReservation,
+);
 
 restaurant_router.get(
   "/:id",
@@ -50,46 +91,6 @@ restaurant_router.delete(
   "/:id",
   validateRestaurantId,
   RestaurantController.deleteRestaurant,
-);
-
-restaurant_router.get("/", RestaurantController.getAllRestaurants);
-
-restaurant_router.post(
-  "/",
-  validateCreateRestaurant,
-  RestaurantController.createRestaurant,
-);
-
-/* =========================
-RESERVATION ROUTES
-========================= */
-
-restaurant_router.get(
-  "/:id/reservations",
-  validateRestaurantId,
-  ReservationController.getAllReservations,
-);
-
-restaurant_router.post(
-  "/:id/reservations",
-  validateRestaurantId,
-  validateCreateReservation,
-  ReservationController.createReservation,
-);
-
-restaurant_router.put(
-  "/:id/reservations/:reservationId",
-  validateRestaurantId,
-  validateReservationId,
-  validateUpdateReservation,
-  ReservationController.updateReservation,
-);
-
-restaurant_router.delete(
-  "/:id/reservations/:reservationId",
-  validateRestaurantId,
-  validateReservationId,
-  ReservationController.deleteReservation,
 );
 
 export default restaurant_router;

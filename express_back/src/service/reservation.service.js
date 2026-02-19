@@ -10,25 +10,41 @@ class ReservationService {
     return await ReservationRepository.findByRestaurant(restaurantId);
   }
 
-  static async getReservationById(id) {
-    const reservation = await ReservationRepository.findById(id);
-    if (!reservation) throw new Error("Reservation not found");
-    return reservation;
+  static async getReservationById(restaurantId, reservationId) {
+    return await ReservationRepository.findById(restaurantId, reservationId);
   }
 
   static async createReservation(data) {
     // expected fields: restaurant (id), customerName, date (YYYY-MM-DD), time (HH:mm), guests (number)
-    if (!data.restaurant || !data.customerName || !data.date || !data.time || !data.guests) {
+    if (
+      !data.restaurant ||
+      !data.customerName ||
+      !data.date ||
+      !data.time ||
+      !data.guests
+    ) {
       throw new Error("Missing required reservation fields");
     }
 
     const restaurant = await RestaurantRepository.findById(data.restaurant);
     if (!restaurant) throw new Error("Restaurant not found");
 
+    const normalizedDate =
+      data.date instanceof Date
+        ? data.date.toISOString().split("T")[0]
+        : data.date;
     // get existing reservations for the same date
-    const existing = await ReservationRepository.findByRestaurantAndDate(data.restaurant, data.date);
-    const reservedGuests = existing.reduce((sum, r) => sum + (r.guests || 0), 0);
-    if (reservedGuests + data.guests > restaurant.capacity) {
+    const existing = await ReservationRepository.findByRestaurantAndDate(
+      data.restaurant,
+      normalizedDate,
+    );
+    const reservedGuests = existing.reduce(
+      (sum, r) => sum + (r.guests || 0),
+      0,
+    );
+    const guests = Number(data.guests);
+    const capacity = Number(restaurant.capacity);
+    if (reservedGuests + guests > capacity) {
       throw new Error("Not enough capacity for the selected day");
     }
 
@@ -43,16 +59,26 @@ class ReservationService {
     return created;
   }
 
-  static async updateReservation(id, data) {
-    const existing = await ReservationRepository.findById(id);
+  static async updateReservation(restaurantId, reservationId, data) {
+    const existing = await ReservationRepository.findById(
+      restaurantId,
+      reservationId,
+    );
     if (!existing) throw new Error("Reservation not found");
-    return await ReservationRepository.update(id, data);
+    return await ReservationRepository.update(
+      restaurantId,
+      reservationId,
+      data,
+    );
   }
 
-  static async deleteReservation(id) {
-    const existing = await ReservationRepository.findById(id);
+  static async deleteReservation(restaurantId, reservationId) {
+    const existing = await ReservationRepository.findById(
+      restaurantId,
+      reservationId,
+    );
     if (!existing) throw new Error("Reservation not found");
-    return await ReservationRepository.delete(id);
+    return await ReservationRepository.delete(reservationId);
   }
 }
 
