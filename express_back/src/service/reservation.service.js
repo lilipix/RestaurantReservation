@@ -1,21 +1,13 @@
 import ReservationRepository from "../repository/reservation.repository.js";
 import RestaurantRepository from "../repository/restaurant.repository.js";
 
-function startOfDay(date) {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
-
-function endOfDay(date) {
-  const d = new Date(date);
-  d.setHours(23, 59, 59, 999);
-  return d;
-}
-
 class ReservationService {
   static async getAllReservations() {
     return await ReservationRepository.findAll();
+  }
+
+  static async getReservationsByRestaurant(restaurantId) {
+    return await ReservationRepository.findByRestaurant(restaurantId);
   }
 
   static async getReservationById(id) {
@@ -25,29 +17,30 @@ class ReservationService {
   }
 
   static async createReservation(data) {
-    if (!data.restaurant || !data.date || !data.covers) {
+    // expected fields: restaurant (id), customerName, date (YYYY-MM-DD), time (HH:mm), guests (number)
+    if (!data.restaurant || !data.customerName || !data.date || !data.time || !data.guests) {
       throw new Error("Missing required reservation fields");
     }
 
     const restaurant = await RestaurantRepository.findById(data.restaurant);
     if (!restaurant) throw new Error("Restaurant not found");
 
-    const dayStart = startOfDay(data.date);
-    const dayEnd = endOfDay(data.date);
-    const existing = await ReservationRepository.findByRestaurantAndDay(
-      data.restaurant,
-      dayStart,
-      dayEnd,
-    );
-    const reservedCovers = existing.reduce(
-      (sum, r) => sum + (r.covers || 0),
-      0,
-    );
-    if (reservedCovers + data.covers > restaurant.capacity) {
+    // get existing reservations for the same date
+    const existing = await ReservationRepository.findByRestaurantAndDate(data.restaurant, data.date);
+    const reservedGuests = existing.reduce((sum, r) => sum + (r.guests || 0), 0);
+    if (reservedGuests + data.guests > restaurant.capacity) {
       throw new Error("Not enough capacity for the selected day");
     }
 
-    return await ReservationRepository.create(data);
+    // store reservation as subdocument in restaurant
+    const created = await ReservationRepository.create(data.restaurant, {
+      customerName: data.customerName,
+      date: data.date,
+      time: data.time,
+      guests: data.guests,
+      status: data.status || undefined,
+    });
+    return created;
   }
 
   static async updateReservation(id, data) {
