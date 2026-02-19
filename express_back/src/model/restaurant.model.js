@@ -36,7 +36,6 @@ const ReservationSchema = new Schema({
 
 // Schema principal pour le restaurant
 const RestaurantSchema = new Schema({
-  _id: { type: String, required: true },
   name: { type: String, required: true },
   cuisine: { type: String, required: true },
   borough: { type: String, required: true },

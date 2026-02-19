@@ -19,6 +19,9 @@ class ReservationController {
   static async getReservationById(req, res, next) {
     try {
       const id = req.params.id;
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return ApiResponse.badRequest(res, "Invalid reservation ID format");
+      }
       const reservation = await ReservationService.getReservationById(id);
       ApiResponse.success(
         res,
@@ -49,7 +52,7 @@ class ReservationController {
     try {
       const id = req.params.id;
       const to_update = req.body;
-      if (id !== to_update._id) {
+      if (id !== String(to_update._id)) {
         return ApiResponse.badRequest(
           res,
           "Reservation ID in the URL does not match ID in the body",

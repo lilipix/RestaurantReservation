@@ -5,9 +5,9 @@ import {
   reservationBaseSchema,
 } from "./schemas.validation.js";
 
-export const restaurantIdSchema = z
-  .string()
-  .regex(/^resto_\d+$/, { message: "Invalid restaurant id format" });
+export const restaurantIdSchema = z.object({
+  id: z.string().regex(/^[0-9a-fA-F]{24}$/),
+});
 
 export const createRestaurantSchema = z.object({
   _id: z.string().min(1),

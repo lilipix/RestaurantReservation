@@ -1,4 +1,4 @@
-import { mongo } from "mongoose";
+import mongoose from "mongoose";
 import RestaurantService from "../service/restaurant.service.js";
 import ApiResponse from "../utils/apiResponse.js";
 
@@ -20,7 +20,7 @@ class RestaurantController {
   static async getRestaurantById(req, res, next) {
     try {
       const restaurant_id = req.params.id;
-      if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
+      if (!mongoose.Types.ObjectId.isValid(restaurant_id)) {
         return ApiResponse.badRequest(res, "Invalid restaurant ID format");
       }
       const restaurant =
@@ -60,13 +60,13 @@ class RestaurantController {
     try {
       const restaurant_id = req.params.id;
       const to_update_data = req.body;
-      if (restaurant_id !== to_update_data._id) {
+      if (restaurant_id !== String(to_update_data._id)) {
         return ApiResponse.badRequest(
           res,
           "Restaurant ID in the URL does not match ID in the body",
         );
       }
-      if (!mongo.Types.ObjectId.isValid(restaurant_id)) {
+      if (!mongoose.Types.ObjectId.isValid(restaurant_id)) {
         return ApiResponse.badRequest(res, "Invalid restaurant ID format");
       }
       const updatedRestaurant = await RestaurantService.updateRestaurant(
@@ -86,7 +86,7 @@ class RestaurantController {
   static async deleteRestaurant(req, res, next) {
     try {
       const id = req.params.id;
-      if (!mongo.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
         return ApiResponse.badRequest(res, "Invalid restaurant ID format");
       }
       await RestaurantService.deleteRestaurant(id);

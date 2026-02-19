@@ -2,11 +2,13 @@ import RestaurantModel from "../model/restaurant.model.js";
 
 class ReservationRepository {
   static async findAll() {
-    return await RestaurantModel.find().populate("restaurant user");
+    return await RestaurantModel.find();
+    // .populate("restaurant user");
   }
 
   static async findById(id) {
-    return await RestaurantModel.findById(id).populate("restaurant user");
+    return await RestaurantModel.findById(id);
+    // .populate("restaurant user");
   }
 
   static async findByRestaurantAndDay(restaurantId, dayStart, dayEnd) {
