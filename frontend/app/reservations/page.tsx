@@ -1,18 +1,32 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import RestaurantService from "@/app/lib/restaurant.service";
-import { Restaurant } from "@/app/types";
-import DeleteReservationButton from "../components/DeleteReservationButton";
+import ReservationService from "@/app/lib/reservation.service";
+import ReservationForm from "./ReservationForm";
+import { Restaurant, Reservation } from "@/app/types";
 
-async function ReservationsPage() {
-  const restaurants: Restaurant[] = await RestaurantService.getAllRestaurants();
+async function fetchRestaurants(): Promise<Restaurant[]> {
+  return await RestaurantService.getAllRestaurants();
+}
 
-  // Récupérer toutes les réservations de tous les restaurants
+export default function ReservationsPage() {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>("");
+
+  // Charger les restaurants au montage
+  useState(() => {
+    fetchRestaurants().then(setRestaurants);
+  }, []);
+
   const allReservations = restaurants.flatMap((restaurant) =>
     (restaurant.reservations || []).map((reservation) => ({
       ...reservation,
       restaurantId: restaurant._id,
       restaurantName: restaurant.name,
-    })),
+    }))
   );
 
   return (
@@ -24,21 +38,9 @@ async function ReservationsPage() {
             RestaurantApp
           </Link>
           <div className="space-x-4">
-            <Link
-              href="/restaurants"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Restaurants
-            </Link>
-            <Link href="/users" className="text-gray-600 hover:text-gray-900">
-              Utilisateurs
-            </Link>
-            <Link
-              href="/reservations"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Réservations
-            </Link>
+            <Link href="/restaurants" className="text-gray-600 hover:text-gray-900">Restaurants</Link>
+            <Link href="/users" className="text-gray-600 hover:text-gray-900">Utilisateurs</Link>
+            <Link href="/reservations" className="text-gray-600 hover:text-gray-900">Réservations</Link>
           </div>
         </div>
       </nav>
@@ -47,8 +49,47 @@ async function ReservationsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900">Réservations</h1>
+          <div className="flex gap-2">
+            <select
+              value={selectedRestaurantId}
+              onChange={(e) => setSelectedRestaurantId(e.target.value)}
+              className="border border-gray-300 rounded p-2"
+            >
+              <option value="">Sélectionner un restaurant</option>
+              {restaurants.map((resto) => (
+                <option key={resto._id} value={resto._id}>{resto.name}</option>
+              ))}
+            </select>
+            <button
+              onClick={() => setShowForm(true)}
+              disabled={!selectedRestaurantId}
+              className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
+            >
+              Ajouter une réservation
+            </button>
+          </div>
         </div>
 
+        {/* Formulaire */}
+        {showForm && selectedRestaurantId && (
+          <ReservationForm
+            restaurantId={selectedRestaurantId}
+            onSuccess={(newReservation) => {
+              // Mettre à jour la liste locale
+              const updatedRestaurants = restaurants.map((r) => {
+                if (r._id === selectedRestaurantId) {
+                  return { ...r, reservations: [...(r.reservations || []), newReservation] };
+                }
+                return r;
+              });
+              setRestaurants(updatedRestaurants);
+              setShowForm(false);
+            }}
+            onClose={() => setShowForm(false)}
+          />
+        )}
+
+        {/* Tableau des réservations */}
         {allReservations.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">Aucune réservation trouvée</p>
@@ -69,28 +110,19 @@ async function ReservationsPage() {
               </thead>
               <tbody>
                 {allReservations.map((reservation) => (
-                  <tr
-                    key={reservation._id}
-                    className="border-t hover:bg-gray-50"
-                  >
-                    <td className="p-4 font-semibold">
-                      {reservation.restaurantName}
-                    </td>
+                  <tr key={reservation._id} className="border-t hover:bg-gray-50">
+                    <td className="p-4 font-semibold">{reservation.restaurantName}</td>
                     <td className="p-4">{reservation.customerName}</td>
                     <td className="p-4">{reservation.date}</td>
                     <td className="p-4">{reservation.time}</td>
                     <td className="p-4">{reservation.guests}</td>
                     <td className="p-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-bold ${
-                          reservation.status === "confirmed"
-                            ? "bg-green-100 text-green-800"
-                            : reservation.status === "cancelled"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {reservation.status || "pending"}
+                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+                        reservation.status === 'confirmed' ? 'bg-green-100 text-green-800' :
+                        reservation.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {reservation.status || 'pending'}
                       </span>
                     </td>
                     <td className="p-4">
@@ -101,10 +133,6 @@ async function ReservationsPage() {
                         >
                           Voir
                         </Link>
-                        <DeleteReservationButton
-                          restaurantId={reservation.restaurantId ?? ""}
-                          reservationId={reservation._id!}
-                        />
                       </div>
                     </td>
                   </tr>
@@ -117,5 +145,3 @@ async function ReservationsPage() {
     </div>
   );
 }
-
-export default ReservationsPage;
