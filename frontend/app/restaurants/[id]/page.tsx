@@ -2,6 +2,7 @@ import Link from "next/link";
 import RestaurantService from "@/app/lib/restaurant.service";
 import { Restaurant } from "@/app/types";
 import AccordionSection from "@/app/components/AccordionSection";
+import DeleteButton from "@/app/components/DeleteButton";
 
 interface RestaurantDetailPageProps {
   params: {
@@ -59,11 +60,21 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
       {/* Détails du restaurant */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {restaurant.name}
-          </h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              {restaurant.name}
+            </h1>
+            <div className="flex gap-4">
+              <Link
+                href={`/restaurants/${restaurant._id}/edit`}
+                className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
+              >
+                Modifier
+              </Link>
+              <DeleteButton restaurantId={restaurant._id!} />
+            </div>
+          </div>
+          <div className="gap-6 mb-8">
             <div>
               <p className="text-gray-600 mb-2">
                 <strong>📍 Localisation:</strong> {restaurant.borough}
@@ -79,18 +90,6 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
                 <strong>👥 Capacité:</strong> {restaurant.capacity} personnes
               </p>
             </div>
-
-            <div className="flex gap-4">
-              <Link
-                href={`/restaurants/${restaurant._id}/edit`}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-700"
-              >
-                Modifier
-              </Link>
-              <button className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                Supprimer
-              </button>
-            </div>
           </div>
 
           {/* Menu */}
@@ -100,32 +99,43 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
                 Dernière mise à jour : 16 février 2026
               </p>
 
-              {restaurant.menu.categories.map((category, index) => (
-                <div key={index} className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4 border-b pb-2">
-                    {category.name}
-                  </h3>
+              {restaurant.menu.categories.map((category, index) => {
+                let icon = "";
+                if (category.name.toLowerCase().includes("entrée"))
+                  icon = "🥗 ";
+                else if (category.name.toLowerCase().includes("plat"))
+                  icon = "🍝 ";
+                else if (category.name.toLowerCase().includes("dessert"))
+                  icon = "🍰 ";
 
-                  <div className="space-y-3">
-                    {category.items.map((item, i) => (
-                      <div
-                        key={i}
-                        className="flex justify-between items-center"
-                      >
-                        <div>
-                          <span className="font-medium">{item.name}</span>
-                          {!item.available && (
-                            <span className="ml-2 text-red-500 text-sm">
-                              (Indisponible)
-                            </span>
-                          )}
+                return (
+                  <div key={index} className="mb-8">
+                    <h3 className="text-xl font-semibold mb-4 border-b pb-2">
+                      {icon}
+                      {category.name}
+                    </h3>
+
+                    <div className="space-y-3">
+                      {category.items.map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center"
+                        >
+                          <div>
+                            <span className="font-medium">{item.name}</span>
+                            {!item.available && (
+                              <span className="ml-2 text-red-500 text-sm">
+                                (Indisponible)
+                              </span>
+                            )}
+                          </div>
+                          <span className="font-semibold">{item.price}€</span>
                         </div>
-                        <span className="font-semibold">{item.price}€</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </AccordionSection>
           )}
 
