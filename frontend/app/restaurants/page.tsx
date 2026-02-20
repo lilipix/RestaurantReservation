@@ -52,10 +52,7 @@ async function RestaurantsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {restaurants.map((restaurant) => (
-              <Link
-                key={restaurant._id}
-                href={`/restaurants/${restaurant._id}`}
-              >
+              <div key={restaurant._id}>
                 <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     {restaurant.name}
@@ -70,8 +67,14 @@ async function RestaurantsPage() {
                   ) : (
                     <p className="text-sm text-gray-400">Aucune réservation</p>
                   )}
-
                   <div className="mt-4 flex gap-2">
+                    <Link
+                      href={`/restaurants/${restaurant._id}`}
+                      className="flex-1 bg-gray-800 text-white px-3 py-2 rounded text-center text-sm hover:bg-gray-900"
+                    >
+                      Voir
+                    </Link>
+
                     <Link
                       href={`/restaurants/${restaurant._id}/edit`}
                       className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-center text-sm hover:bg-blue-700"
@@ -83,7 +86,7 @@ async function RestaurantsPage() {
                     </button>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}
