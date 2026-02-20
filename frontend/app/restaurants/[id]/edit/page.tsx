@@ -107,6 +107,7 @@ export default function EditRestaurantPage() {
 
       if (result) {
         // Rediriger vers la page de détails
+        router.refresh();
         router.push(`/restaurants/${restaurantId}`);
       } else {
         setError("Erreur lors de la mise à jour du restaurant");
@@ -130,16 +131,12 @@ export default function EditRestaurantPage() {
   if (!restaurant) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <nav className="bg-white shadow">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link href="/restaurants" className="text-3xl font-bold text-orange-600">
-              RestaurantApp
-            </Link>
-          </div>
-        </nav>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
           <p className="text-xl text-gray-600">Restaurant non trouvé</p>
-          <Link href="/restaurants" className="text-orange-600 hover:underline mt-4 block">
+          <Link
+            href="/restaurants"
+            className="text-orange-600 hover:underline mt-4 block"
+          >
             Retour aux restaurants
           </Link>
         </div>
@@ -149,31 +146,14 @@ export default function EditRestaurantPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/accueil" className="text-3xl font-bold text-orange-600">
-            RestaurantApp
-          </Link>
-          <div className="space-x-4">
-            <Link href="/restaurants" className="text-gray-600 hover:text-gray-900">
-              Restaurants
-            </Link>
-            <Link href="/users" className="text-gray-600 hover:text-gray-900">
-              Utilisateurs
-            </Link>
-            <Link href="/reservations" className="text-gray-600 hover:text-gray-900">
-              Réservations
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Contenu principal */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="mb-8">
-            <Link href={`/restaurants/${restaurantId}`} className="text-orange-600 hover:underline">
+            <Link
+              href={`/restaurants/${restaurantId}`}
+              className="text-orange-600 hover:underline"
+            >
               ← Retour
             </Link>
             <h1 className="text-4xl font-bold text-gray-900 mt-4">
@@ -255,7 +235,9 @@ export default function EditRestaurantPage() {
 
             {/* Adresse */}
             <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Adresse</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Adresse
+              </h3>
 
               <div className="space-y-4">
                 <div>
