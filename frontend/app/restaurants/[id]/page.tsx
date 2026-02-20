@@ -1,6 +1,10 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import RestaurantService from "@/app/lib/restaurant.service";
 import { Restaurant } from "@/app/types";
+import RestaurantForm from "../RestaurantForm";
 
 interface RestaurantDetailPageProps {
   params: {
@@ -8,8 +12,17 @@ interface RestaurantDetailPageProps {
   };
 }
 
-async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
-  const restaurant: Restaurant | null = await RestaurantService.getRestaurantById(params.id);
+export default function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await RestaurantService.getRestaurantById(params.id);
+      setRestaurant(data);
+    }
+    fetchData();
+  }, [params.id]);
 
   if (!restaurant) {
     return (
@@ -31,6 +44,11 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
     );
   }
 
+  const handleFormSuccess = (updatedRestaurant: Restaurant) => {
+    setRestaurant(updatedRestaurant);
+    setShowForm(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
@@ -45,11 +63,10 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
         </div>
       </nav>
 
-      {/* Détails du restaurant */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{restaurant.name}</h1>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
               <p className="text-gray-600 mb-2"><strong>📍 Localisation:</strong> {restaurant.location}</p>
@@ -59,19 +76,37 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
             </div>
 
             <div className="flex gap-4">
-              <Link
-                href={`/restaurants/${restaurant._id}/edit`}
+              <button
+                onClick={() => setShowForm(true)}
                 className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-700"
               >
                 Modifier
-              </Link>
+              </button>
               <button
+                onClick={async () => {
+                  const confirmed = confirm(`Supprimer le restaurant ${restaurant.name} ?`);
+                  if (!confirmed) return;
+                  const success = await RestaurantService.deleteRestaurant(restaurant._id);
+                  if (success) window.location.href = "/restaurants";
+                  else alert("Erreur lors de la suppression.");
+                }}
                 className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
               >
                 Supprimer
               </button>
             </div>
           </div>
+
+          {/* Formulaire de modification */}
+          {showForm && (
+            <div className="mb-8">
+              <RestaurantForm
+                initialData={restaurant}
+                onSuccess={handleFormSuccess}
+                onClose={() => setShowForm(false)}
+              />
+            </div>
+          )}
 
           {/* Menu */}
           {restaurant.menu && restaurant.menu.length > 0 && (
@@ -116,9 +151,7 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
                             res.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                             res.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                             'bg-red-100 text-red-800'
-                          }`}>
-                            {res.status}
-                          </span>
+                          }`}>{res.status}</span>
                         </td>
                       </tr>
                     ))}
@@ -134,5 +167,3 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
     </div>
   );
 }
-
-export default RestaurantDetailPage;
