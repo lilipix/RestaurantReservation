@@ -15,7 +15,7 @@ const validate =
       return ApiResponse.badRequest(res, "Validation échouée", errors);
     }
 
-    req.body = result.data;
+    req[property] = result.data;
     next();
   };
 

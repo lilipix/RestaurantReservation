@@ -60,12 +60,7 @@ class RestaurantController {
     try {
       const restaurant_id = req.params.id;
       const to_update_data = req.body;
-      if (restaurant_id !== String(to_update_data._id)) {
-        return ApiResponse.badRequest(
-          res,
-          "Restaurant ID in the URL does not match ID in the body",
-        );
-      }
+
       if (!mongoose.Types.ObjectId.isValid(restaurant_id)) {
         return ApiResponse.badRequest(res, "Invalid restaurant ID format");
       }
@@ -73,6 +68,10 @@ class RestaurantController {
         restaurant_id,
         to_update_data,
       );
+      if (!updatedRestaurant) {
+        return ApiResponse.notFound(res, "Restaurant not found");
+      }
+
       ApiResponse.success(
         res,
         "Restaurant updated successfully",

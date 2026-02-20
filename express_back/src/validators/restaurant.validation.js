@@ -4,20 +4,27 @@ import {
   menuSchema,
   reservationBaseSchema,
 } from "./schemas.validation.js";
+import { objectIdSchema } from "./objectId.validation.js";
 
 export const restaurantIdSchema = z.object({
-  id: z.string().regex(/^[0-9a-fA-F]{24}$/),
+  id: objectIdSchema,
 });
 
 export const createRestaurantSchema = z.object({
-  _id: z.string().min(1),
   name: z.string().min(1),
   cuisine: z.string().min(1),
   borough: z.string().min(1),
   capacity: z.number().int().min(1),
   address: addressSchema,
   menu: menuSchema,
-  reservations: z.array(reservationBaseSchema).default([]),
+  reservations: z.array(reservationBaseSchema).optional(),
 });
 
-export const updateRestaurantSchema = createRestaurantSchema.partial();
+export const updateRestaurantSchema = z.object({
+  name: z.string().min(1).optional(),
+  cuisine: z.string().min(1).optional(),
+  borough: z.string().min(1).optional(),
+  capacity: z.number().int().min(1).optional(),
+  address: addressSchema.partial().optional(),
+  menu: menuSchema.partial().optional(),
+});

@@ -1,0 +1,77 @@
+info:
+  name: Post restaurant
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: http://localhost:5000/api/restaurants
+  body:
+    type: json
+    data: |-
+      { "address": {
+            "street": "8 Rue Mercière",
+            "city": "Paris",
+            "zipcode": "69002"
+          },
+          "name": "Test POST",
+          "cuisine": "Italienne",
+          "borough": "Lyon",
+          "capacity": 30,
+          "menu": {
+            "lastUpdate": "2026-02-16T00:00:00.000Z",
+            "categories": [
+              {
+                "name": "Pizzas",
+                "items": [
+                  {
+                    "name": "Margherita",
+                    "price": 10,
+                    "available": true
+                  },
+                  {
+                    "name": "Quattro Formaggi",
+                    "price": 12,
+                    "available": true
+                  },
+                  {
+                    "name": "Diavola",
+                    "price": 13,
+                    "available": true
+                  }
+                ]
+              },
+              {
+                "name": "Pâtes",
+                "items": [
+                  {
+                    "name": "Carbonara",
+                    "price": 14,
+                    "available": true
+                  },
+                  {
+                    "name": "Lasagnes",
+                    "price": 15,
+                    "available": true
+                  }
+                ]
+              }
+            ]
+          },
+          "reservations": [
+            {
+              "customerName": "Emma Robert",
+              "date": "2026-02-20",
+              "time": "20:00",
+              "guests": 12,
+              "status": "confirmed"
+            }
+          ]
+        }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

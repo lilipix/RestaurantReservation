@@ -1,10 +1,6 @@
 import { reservationBaseSchema } from "./schemas.validation.js";
 import { z } from "zod";
-import mongoose from "mongoose";
-
-export const objectIdSchema = z
-  .string()
-  .regex(/^[0-9a-fA-F]{24}$/, "Invalid ObjectId format");
+import { objectIdSchema } from "./objectId.validation.js";
 
 export const reservationIdSchema = z.object({
   id: objectIdSchema, // restaurant _id

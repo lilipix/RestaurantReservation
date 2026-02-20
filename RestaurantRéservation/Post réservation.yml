@@ -1,0 +1,25 @@
+info:
+  name: Post réservation
+  type: http
+  seq: 17
+
+http:
+  method: POST
+  url: http://localhost:5000/api/restaurants/6995f4ea045469a3670b45bf/reservations
+  body:
+    type: json
+    data: |-
+      {
+            "customerName": "Test",
+            "date": "2026-02-20",
+            "time": "20:00",
+            "guests": 2,
+            "status": "confirmed"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

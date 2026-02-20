@@ -1,0 +1,21 @@
+info:
+  name: Put réservation
+  type: http
+  seq: 19
+
+http:
+  method: PUT
+  url: http://localhost:5000/api/restaurants/6995f4ea045469a3670b45c1/reservations/6996eeb47d35168aff1277f7
+  body:
+    type: json
+    data: |-
+      {
+            "guests": 2
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

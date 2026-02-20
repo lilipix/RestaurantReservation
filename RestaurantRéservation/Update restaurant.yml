@@ -1,0 +1,22 @@
+info:
+  name: Update restaurant
+  type: http
+  seq: 9
+
+http:
+  method: PUT
+  url: http://localhost:5000/api/restaurants/699720937538852042cc65f6
+  body:
+    type: json
+    data: |+
+      {
+            "name": "Test PUT"
+      }
+
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

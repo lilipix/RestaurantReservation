@@ -24,7 +24,7 @@ export const categorySchema = z.object({
 });
 
 export const menuSchema = z.object({
-  lastUpdate: z.coerce.date(),
+  lastUpdate: z.coerce.date().optional(),
   categories: z.array(categorySchema).min(1),
 });
 
@@ -33,7 +33,7 @@ RESERVATION
 ========================= */
 export const reservationBaseSchema = z.object({
   customerName: z.string().min(1),
-  date: z.coerce.date(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
   guests: z.number().int().min(1),
   status: z.enum(["confirmed", "cancelled"]).default("confirmed"),

@@ -19,7 +19,7 @@ class RestaurantRepository {
 
   static async update(id, data) {
     return await RestaurantModel.findByIdAndUpdate(id, data, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
   }
