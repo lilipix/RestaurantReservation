@@ -36,11 +36,14 @@ const RestaurantService = {
   // Créer un nouveau restaurant
   async createRestaurant(restaurant: Omit<Restaurant, "_id">): Promise<Restaurant | null> {
     try {
+      console.log("Envoi du restaurant:", restaurant);
       const response = await api.post<ResponseApi<Restaurant>>("/restaurants", restaurant);
+      console.log("Réponse du serveur:", response.data);
       return response.data.data || null;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erreur lors de la création du restaurant:", error);
-      return null;
+      console.error("Détails erreur:", error.response?.data);
+      throw error;
     }
   },
 
