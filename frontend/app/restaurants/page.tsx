@@ -7,32 +7,6 @@ async function RestaurantsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/accueil" className="text-3xl font-bold text-orange-600">
-            RestaurantApp
-          </Link>
-          <div className="space-x-4">
-            <Link
-              href="/restaurants"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Restaurants
-            </Link>
-            <Link href="/users" className="text-gray-600 hover:text-gray-900">
-              Utilisateurs
-            </Link>
-            <Link
-              href="/reservations"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Réservations
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Contenu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-between items-center mb-8">
@@ -53,7 +27,8 @@ async function RestaurantsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {restaurants.map((restaurant) => (
               <div key={restaurant._id}>
-                <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
+                // code à mettre
+<div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     {restaurant.name}
                   </h2>

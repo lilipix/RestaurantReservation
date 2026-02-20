@@ -15,6 +15,7 @@ async function ReservationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+ajout-reservations
       {/* Navigation */}
       <nav className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -38,6 +39,10 @@ async function ReservationsPage() {
 
       <div className="max-w-7xl mx-auto px-4 py-12">
 
+
+      {/* Contenu */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+ main
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900">
             Réservations
@@ -92,6 +97,29 @@ async function ReservationsPage() {
                         {reservation.status ?? "pending"}
                       </span>
                     </td>
+ ajout-reservations
+
+                    <td className="p-4">
+                      <div className="flex gap-2">
+                        <Link
+                          href={`/restaurants/${reservation.restaurantId}`}
+                          className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                        >
+                          Voir
+                        </Link>
+                        <Link
+                          href={`/reservations/${reservation._id}/edit?restaurantId=${reservation.restaurantId}`}
+                          className="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600"
+                        >
+                          Modifier
+                        </Link>
+                        <DeleteReservationButton
+                          restaurantId={reservation.restaurantId ?? ""}
+                          reservationId={reservation._id!}
+                        />
+                      </div>
+                    </td>
+main
                   </tr>
                 ))}
               </tbody>

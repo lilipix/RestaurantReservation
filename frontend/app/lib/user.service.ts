@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ResponseApi, User } from "@/app/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -17,6 +18,9 @@ const UserService = {
       const response = await api.get<ResponseApi<User[]>>("/users");
       return response.data.data || [];
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        return [];
+      }
       console.error("Erreur lors de la récupération des utilisateurs:", error);
       return [];
     }
@@ -28,7 +32,10 @@ const UserService = {
       const response = await api.get<ResponseApi<User>>(`/users/${id}`);
       return response.data.data || null;
     } catch (error) {
-      console.error(`Erreur lors de la récupération de l'utilisateur ${id}:`, error);
+      console.error(
+        `Erreur lors de la récupération de l'utilisateur ${id}:`,
+        error,
+      );
       return null;
     }
   },
@@ -50,7 +57,10 @@ const UserService = {
       const response = await api.put<ResponseApi<User>>(`/users/${id}`, user);
       return response.data.data || null;
     } catch (error) {
-      console.error(`Erreur lors de la mise à jour de l'utilisateur ${id}:`, error);
+      console.error(
+        `Erreur lors de la mise à jour de l'utilisateur ${id}:`,
+        error,
+      );
       return null;
     }
   },
@@ -61,7 +71,10 @@ const UserService = {
       await api.delete(`/users/${id}`);
       return true;
     } catch (error) {
-      console.error(`Erreur lors de la suppression de l'utilisateur ${id}:`, error);
+      console.error(
+        `Erreur lors de la suppression de l'utilisateur ${id}:`,
+        error,
+      );
       return false;
     }
   },
