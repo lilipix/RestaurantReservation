@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ResponseApi, Restaurant } from "@/app/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -25,20 +26,28 @@ const RestaurantService = {
   // Récupérer un restaurant par ID
   async getRestaurantById(id: string): Promise<Restaurant | null> {
     try {
-      const response = await api.get<ResponseApi<Restaurant>>(`/restaurants/${id}`);
+      const response = await api.get<ResponseApi<Restaurant>>(
+        `/restaurants/${id}`,
+      );
       return response.data.data || null;
     } catch (error) {
-      console.error(`Erreur lors de la récupération du restaurant ${id}:`, error);
+      console.error(
+        `Erreur lors de la récupération du restaurant ${id}:`,
+        error,
+      );
       return null;
     }
   },
 
   // Créer un nouveau restaurant
-  async createRestaurant(restaurant: Omit<Restaurant, "_id">): Promise<Restaurant | null> {
+  async createRestaurant(
+    restaurant: Omit<Restaurant, "_id">,
+  ): Promise<Restaurant | null> {
     try {
-      console.log("Envoi du restaurant:", restaurant);
-      const response = await api.post<ResponseApi<Restaurant>>("/restaurants", restaurant);
-      console.log("Réponse du serveur:", response.data);
+      const response = await api.post<ResponseApi<Restaurant>>(
+        "/restaurants",
+        restaurant,
+      );
       return response.data.data || null;
     } catch (error: any) {
       console.error("Erreur lors de la création du restaurant:", error);
@@ -48,12 +57,21 @@ const RestaurantService = {
   },
 
   // Mettre à jour un restaurant
-  async updateRestaurant(id: string, restaurant: Partial<Restaurant>): Promise<Restaurant | null> {
+  async updateRestaurant(
+    id: string,
+    restaurant: Partial<Restaurant>,
+  ): Promise<Restaurant | null> {
     try {
-      const response = await api.put<ResponseApi<Restaurant>>(`/restaurants/${id}`, restaurant);
+      const response = await api.put<ResponseApi<Restaurant>>(
+        `/restaurants/${id}`,
+        restaurant,
+      );
       return response.data.data || null;
     } catch (error) {
-      console.error(`Erreur lors de la mise à jour du restaurant ${id}:`, error);
+      console.error(
+        `Erreur lors de la mise à jour du restaurant ${id}:`,
+        error,
+      );
       return null;
     }
   },
@@ -64,7 +82,10 @@ const RestaurantService = {
       await api.delete(`/restaurants/${id}`);
       return true;
     } catch (error) {
-      console.error(`Erreur lors de la suppression du restaurant ${id}:`, error);
+      console.error(
+        `Erreur lors de la suppression du restaurant ${id}:`,
+        error,
+      );
       return false;
     }
   },

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ResponseApi, Reservation } from "@/app/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,11 +13,14 @@ const api = axios.create({
 
 const ReservationService = {
   // Créer une réservation pour un restaurant
-  async createReservation(restaurantId: string, reservation: Omit<Reservation, "_id">): Promise<Reservation | null> {
+  async createReservation(
+    restaurantId: string,
+    reservation: Omit<Reservation, "_id">,
+  ): Promise<Reservation | null> {
     try {
       const response = await api.post<ResponseApi<Reservation>>(
         `/restaurants/${restaurantId}/reservations`,
-        reservation
+        reservation,
       );
       return response.data.data || null;
     } catch (error) {
@@ -29,12 +33,12 @@ const ReservationService = {
   async updateReservation(
     restaurantId: string,
     reservationId: string,
-    reservation: Partial<Reservation>
+    reservation: Partial<Reservation>,
   ): Promise<Reservation | null> {
     try {
       const response = await api.put<ResponseApi<Reservation>>(
         `/restaurants/${restaurantId}/reservations/${reservationId}`,
-        reservation
+        reservation,
       );
       return response.data.data || null;
     } catch (error) {
@@ -43,10 +47,30 @@ const ReservationService = {
     }
   },
 
-  // Supprimer une réservation
-  async deleteReservation(restaurantId: string, reservationId: string): Promise<boolean> {
+  // Récupérer une réservation par ID
+  async getReservationById(
+    restaurantId: string,
+    reservationId: string,
+  ): Promise<Reservation | null> {
     try {
-      await api.delete(`/restaurants/${restaurantId}/reservations/${reservationId}`);
+      const response = await api.get<ResponseApi<Reservation>>(
+        `/restaurants/${restaurantId}/reservations/${reservationId}`,
+      );
+      return response.data.data || null;
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de la réservation:`, error);
+      return null;
+    }
+  },
+  // Supprimer une réservation
+  async deleteReservation(
+    restaurantId: string,
+    reservationId: string,
+  ): Promise<boolean> {
+    try {
+      await api.delete(
+        `/restaurants/${restaurantId}/reservations/${reservationId}`,
+      );
       return true;
     } catch (error) {
       console.error(`Erreur lors de la suppression de la réservation:`, error);
