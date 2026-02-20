@@ -35,19 +35,25 @@ const ReservationSchema = new Schema({
 });
 
 // Schema principal pour le restaurant
-const RestaurantSchema = new Schema({
-  name: { type: String, required: true },
-  cuisine: { type: String, required: true },
-  borough: { type: String, required: true },
-  capacity: { type: Number, required: true },
-  address: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    zipcode: { type: String, required: true },
+const RestaurantSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    cuisine: { type: String, required: true },
+    borough: { type: String, required: true },
+    capacity: { type: Number, required: true },
+    address: {
+      street: { type: String, required: true },
+      city: { type: String, required: true },
+      zipcode: { type: String, required: true },
+    },
+    menu: MenuSchema,
+    reservations: [ReservationSchema],
   },
-  menu: MenuSchema,
-  reservations: [ReservationSchema],
-});
+  {
+    versionKey: false,
+    timestamps: true,
+  },
+);
 
 // Export du modèle
 export default model("Restaurant", RestaurantSchema);

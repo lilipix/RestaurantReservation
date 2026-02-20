@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5000/api/restaurants/6995f4ea045469a3670b45bf
+  url: http://localhost:5000/api/restaurants/699734bc926e857adeb27819
   auth: inherit
 
 settings:

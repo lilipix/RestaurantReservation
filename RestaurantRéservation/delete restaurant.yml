@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:5000/api/restaurants/6996e8d67647f3e477251624
+  url: http://localhost:5000/api/restaurants/699720937538852042cc65f6
   auth: inherit
 
 settings:
