@@ -17,16 +17,6 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
   if (!restaurant) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <nav className="bg-white shadow">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link
-              href="/restaurants"
-              className="text-3xl font-bold text-orange-600"
-            >
-              RestaurantApp
-            </Link>
-          </div>
-        </nav>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
           <p className="text-xl text-gray-600">Restaurant non trouvé</p>
           <Link
@@ -42,6 +32,17 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <Link
+            href="/restaurants"
+            className="text-gray-600 hover:text-gray-900"
+          >
+            ← Retour
+          </Link>
+        </div>
+      </nav>
       {/* Détails du restaurant */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
