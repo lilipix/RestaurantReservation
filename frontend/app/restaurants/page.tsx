@@ -27,7 +27,8 @@ async function RestaurantsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {restaurants.map((restaurant) => (
               <div key={restaurant._id}>
-                <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
+                // code à mettre
+<div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     {restaurant.name}
                   </h2>
