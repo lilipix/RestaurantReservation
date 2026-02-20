@@ -63,11 +63,13 @@ async function RestaurantsPage() {
                   <p className="text-gray-600 mb-1">📍 {restaurant.borough}</p>
                   <p className="text-gray-600 mb-1">🍽️ {restaurant.cuisine}</p>
                   {restaurant.reservations &&
-                    restaurant.reservations.length > 0 && (
-                      <p className="text-sm text-orange-600">
-                        {restaurant.reservations.length} réservation(s)
-                      </p>
-                    )}
+                  restaurant.reservations.length > 0 ? (
+                    <p className="text-sm text-orange-600">
+                      {restaurant.reservations.length} réservation(s)
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-400">Aucune réservation</p>
+                  )}
 
                   <div className="mt-4 flex gap-2">
                     <Link
