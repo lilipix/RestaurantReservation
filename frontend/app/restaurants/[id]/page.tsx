@@ -1,6 +1,7 @@
 import Link from "next/link";
 import RestaurantService from "@/app/lib/restaurant.service";
 import { Restaurant } from "@/app/types";
+import AccordionSection from "@/app/components/AccordionSection";
 
 interface RestaurantDetailPageProps {
   params: {
@@ -9,21 +10,28 @@ interface RestaurantDetailPageProps {
 }
 
 async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
-  const restaurant: Restaurant | null = await RestaurantService.getRestaurantById(params.id);
+  const restaurant: Restaurant | null =
+    await RestaurantService.getRestaurantById(params.id);
 
   if (!restaurant) {
     return (
       <div className="min-h-screen bg-gray-50">
         <nav className="bg-white shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link href="/restaurants" className="text-3xl font-bold text-orange-600">
+            <Link
+              href="/restaurants"
+              className="text-3xl font-bold text-orange-600"
+            >
               RestaurantApp
             </Link>
           </div>
         </nav>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
           <p className="text-xl text-gray-600">Restaurant non trouvé</p>
-          <Link href="/restaurants" className="text-orange-600 hover:underline mt-4 block">
+          <Link
+            href="/restaurants"
+            className="text-orange-600 hover:underline mt-4 block"
+          >
             Retour aux restaurants
           </Link>
         </div>
@@ -39,7 +47,10 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
           <Link href="/accueil" className="text-3xl font-bold text-orange-600">
             RestaurantApp
           </Link>
-          <Link href="/restaurants" className="text-gray-600 hover:text-gray-900">
+          <Link
+            href="/restaurants"
+            className="text-gray-600 hover:text-gray-900"
+          >
             ← Retour
           </Link>
         </div>
@@ -48,14 +59,25 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
       {/* Détails du restaurant */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{restaurant.name}</h1>
-          
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            {restaurant.name}
+          </h1>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
-              <p className="text-gray-600 mb-2"><strong>📍 Localisation:</strong> {restaurant.location}</p>
-              <p className="text-gray-600 mb-2"><strong>📞 Téléphone:</strong> {restaurant.phone}</p>
-              <p className="text-gray-600 mb-2"><strong>✉️ Email:</strong> {restaurant.email}</p>
-              <p className="text-gray-600 mb-2"><strong>🔑 ID:</strong> {restaurant.resto_id}</p>
+              <p className="text-gray-600 mb-2">
+                <strong>📍 Localisation:</strong> {restaurant.borough}
+              </p>
+              <p className="text-gray-600 mb-2">
+                <strong> 🏠 Adresse:</strong> {restaurant.address.street}{" "}
+                {restaurant.address.zipcode} {restaurant.address.city}
+              </p>
+              <p className="text-gray-600 mb-2">
+                <strong>🍽️ Cuisine:</strong> {restaurant.cuisine}
+              </p>
+              <p className="text-gray-600 mb-2">
+                <strong>👥 Capacité:</strong> {restaurant.capacity} personnes
+              </p>
             </div>
 
             <div className="flex gap-4">
@@ -65,36 +87,53 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
               >
                 Modifier
               </Link>
-              <button
-                className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-              >
+              <button className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
                 Supprimer
               </button>
             </div>
           </div>
 
           {/* Menu */}
-          {restaurant.menu && restaurant.menu.length > 0 && (
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Menu</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {restaurant.menu.map((item, index) => (
-                  <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-bold text-lg">{item.name}</h3>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
-                    <p className="text-orange-600 font-bold mt-2">{item.price} €</p>
+          {restaurant.menu && (
+            <AccordionSection title="🍽 Menu">
+              <p className="text-sm text-gray-500 my-6">
+                Dernière mise à jour : 16 février 2026
+              </p>
+
+              {restaurant.menu.categories.map((category, index) => (
+                <div key={index} className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4 border-b pb-2">
+                    {category.name}
+                  </h3>
+
+                  <div className="space-y-3">
+                    {category.items.map((item, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between items-center"
+                      >
+                        <div>
+                          <span className="font-medium">{item.name}</span>
+                          {!item.available && (
+                            <span className="ml-2 text-red-500 text-sm">
+                              (Indisponible)
+                            </span>
+                          )}
+                        </div>
+                        <span className="font-semibold">{item.price}€</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              ))}
+            </AccordionSection>
           )}
 
           {/* Réservations */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Réservations</h2>
+          <AccordionSection title="📅 Réservations">
             {restaurant.reservations && restaurant.reservations.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
+                <table className="w-full border-collapse mt-6">
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="border p-2 text-left">Nom</th>
@@ -112,11 +151,15 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
                         <td className="border p-2">{res.time}</td>
                         <td className="border p-2">{res.guests}</td>
                         <td className="border p-2">
-                          <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                            res.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                            res.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
+                          <span
+                            className={`px-3 py-1 rounded-full text-sm font-bold ${
+                              res.status === "confirmed"
+                                ? "bg-green-100 text-green-800"
+                                : res.status === "cancelled"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
+                            }`}
+                          >
                             {res.status}
                           </span>
                         </td>
@@ -126,9 +169,11 @@ async function RestaurantDetailPage({ params }: RestaurantDetailPageProps) {
                 </table>
               </div>
             ) : (
-              <p className="text-gray-600">Aucune réservation pour ce restaurant</p>
+              <p className="text-gray-600 mt-6">
+                Aucune réservation pour ce restaurant
+              </p>
             )}
-          </div>
+          </AccordionSection>
         </div>
       </div>
     </div>

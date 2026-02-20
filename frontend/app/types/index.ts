@@ -16,11 +16,29 @@ export interface User {
   role?: string;
 }
 
+export interface Address {
+  street: string;
+  city: string;
+  zipcode: string;
+}
+
 export interface MenuItem {
   name: string;
   price: number;
-  description?: string;
+  available: boolean;
 }
+
+export interface Category {
+  name: string;
+  items: MenuItem[];
+}
+
+export interface Menu {
+  lastUpdate?: Date;
+  categories: Category[];
+}
+
+export type ReservationStatus = "confirmed" | "cancelled";
 
 export interface Reservation {
   _id?: string;
@@ -28,16 +46,16 @@ export interface Reservation {
   date: string;
   time: string;
   guests: number;
-  status?: string;
+  status: ReservationStatus;
 }
 
 export interface Restaurant {
   _id?: string;
-  resto_id: string;
   name: string;
-  location: string;
-  phone: string;
-  email: string;
-  menu?: MenuItem[];
+  borough: string;
+  cuisine: string;
+  capacity: number;
+  address: Address;
+  menu?: Menu;
   reservations?: Reservation[];
 }
