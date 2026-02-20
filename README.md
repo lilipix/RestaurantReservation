@@ -1,7 +1,7 @@
 # RestaurantReservation
 
 # Membre de l'equipe
-  - Aurelie DEUMERE
+  - Aurelie DEMERE
   - Franck joel NZOKOU
   - Dina CHAOUKI
   - Cécile-Audrée Deumeni
