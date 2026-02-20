@@ -1,17 +1,18 @@
 import Link from "next/link";
 import RestaurantService from "@/app/lib/restaurant.service";
 import { Restaurant } from "@/app/types";
+import DeleteReservationButton from "../components/DeleteReservationButton";
 
 async function ReservationsPage() {
   const restaurants: Restaurant[] = await RestaurantService.getAllRestaurants();
 
   // Récupérer toutes les réservations de tous les restaurants
-  const allReservations = restaurants.flatMap((restaurant) => 
+  const allReservations = restaurants.flatMap((restaurant) =>
     (restaurant.reservations || []).map((reservation) => ({
       ...reservation,
       restaurantId: restaurant._id,
       restaurantName: restaurant.name,
-    }))
+    })),
   );
 
   return (
@@ -23,13 +24,19 @@ async function ReservationsPage() {
             RestaurantApp
           </Link>
           <div className="space-x-4">
-            <Link href="/restaurants" className="text-gray-600 hover:text-gray-900">
+            <Link
+              href="/restaurants"
+              className="text-gray-600 hover:text-gray-900"
+            >
               Restaurants
             </Link>
             <Link href="/users" className="text-gray-600 hover:text-gray-900">
               Utilisateurs
             </Link>
-            <Link href="/reservations" className="text-gray-600 hover:text-gray-900">
+            <Link
+              href="/reservations"
+              className="text-gray-600 hover:text-gray-900"
+            >
               Réservations
             </Link>
           </div>
@@ -62,19 +69,28 @@ async function ReservationsPage() {
               </thead>
               <tbody>
                 {allReservations.map((reservation) => (
-                  <tr key={reservation._id} className="border-t hover:bg-gray-50">
-                    <td className="p-4 font-semibold">{reservation.restaurantName}</td>
+                  <tr
+                    key={reservation._id}
+                    className="border-t hover:bg-gray-50"
+                  >
+                    <td className="p-4 font-semibold">
+                      {reservation.restaurantName}
+                    </td>
                     <td className="p-4">{reservation.customerName}</td>
                     <td className="p-4">{reservation.date}</td>
                     <td className="p-4">{reservation.time}</td>
                     <td className="p-4">{reservation.guests}</td>
                     <td className="p-4">
-                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                        reservation.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        reservation.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
-                        {reservation.status || 'pending'}
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-bold ${
+                          reservation.status === "confirmed"
+                            ? "bg-green-100 text-green-800"
+                            : reservation.status === "cancelled"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {reservation.status || "pending"}
                       </span>
                     </td>
                     <td className="p-4">
@@ -85,6 +101,10 @@ async function ReservationsPage() {
                         >
                           Voir
                         </Link>
+                        <DeleteReservationButton
+                          restaurantId={reservation.restaurantId ?? ""}
+                          reservationId={reservation._id!}
+                        />
                       </div>
                     </td>
                   </tr>
