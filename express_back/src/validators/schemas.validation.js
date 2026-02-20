@@ -25,7 +25,7 @@ export const categorySchema = z.object({
 
 export const menuSchema = z.object({
   lastUpdate: z.coerce.date().optional(),
-  categories: z.array(categorySchema).min(1),
+  categories: z.array(categorySchema).optional(),
 });
 
 /* =========================
