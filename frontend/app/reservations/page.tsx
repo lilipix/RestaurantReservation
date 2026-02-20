@@ -17,32 +17,6 @@ async function ReservationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/accueil" className="text-3xl font-bold text-orange-600">
-            RestaurantApp
-          </Link>
-          <div className="space-x-4">
-            <Link
-              href="/restaurants"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Restaurants
-            </Link>
-            <Link href="/users" className="text-gray-600 hover:text-gray-900">
-              Utilisateurs
-            </Link>
-            <Link
-              href="/reservations"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Réservations
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Contenu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-between items-center mb-8">
@@ -100,6 +74,12 @@ async function ReservationsPage() {
                           className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
                         >
                           Voir
+                        </Link>
+                        <Link
+                          href={`/reservations/${reservation._id}/edit?restaurantId=${reservation.restaurantId}`}
+                          className="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600"
+                        >
+                          Modifier
                         </Link>
                         <DeleteReservationButton
                           restaurantId={reservation.restaurantId ?? ""}

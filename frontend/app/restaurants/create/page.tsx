@@ -68,7 +68,7 @@ export default function CreateRestaurantPage() {
           categories: [],
         },
       } as any);
-      
+
       if (result) {
         // Rediriger et forcer le recharge
         router.push("/restaurants");
@@ -89,29 +89,11 @@ export default function CreateRestaurantPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/accueil" className="text-3xl font-bold text-orange-600">
-            RestaurantApp
-          </Link>
-          <div className="space-x-4">
-            <Link href="/restaurants" className="text-gray-600 hover:text-gray-900">
-              Restaurants
-            </Link>
-            <Link href="/users" className="text-gray-600 hover:text-gray-900">
-              Utilisateurs
-            </Link>
-            <Link href="/reservations" className="text-gray-600 hover:text-gray-900">
-              Réservations
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Contenu */}
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Créer un restaurant</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">
+          Créer un restaurant
+        </h1>
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -119,10 +101,15 @@ export default function CreateRestaurantPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-lg shadow-lg p-8"
+        >
           {/* Nom */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2">Nom du restaurant *</label>
+            <label className="block text-gray-700 font-bold mb-2">
+              Nom du restaurant *
+            </label>
             <input
               type="text"
               name="name"
@@ -136,7 +123,9 @@ export default function CreateRestaurantPage() {
 
           {/* Cuisine */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2">Type de cuisine *</label>
+            <label className="block text-gray-700 font-bold mb-2">
+              Type de cuisine *
+            </label>
             <input
               type="text"
               name="cuisine"
@@ -150,7 +139,9 @@ export default function CreateRestaurantPage() {
 
           {/* Borough */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2">Quartier *</label>
+            <label className="block text-gray-700 font-bold mb-2">
+              Quartier *
+            </label>
             <input
               type="text"
               name="borough"
@@ -164,7 +155,9 @@ export default function CreateRestaurantPage() {
 
           {/* Capacité */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2">Capacité (nombre de places) *</label>
+            <label className="block text-gray-700 font-bold mb-2">
+              Capacité (nombre de places) *
+            </label>
             <input
               type="number"
               name="capacity"
@@ -182,7 +175,9 @@ export default function CreateRestaurantPage() {
             <h3 className="font-bold text-gray-900 mb-4">Adresse</h3>
 
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">Rue *</label>
+              <label className="block text-gray-700 font-bold mb-2">
+                Rue *
+              </label>
               <input
                 type="text"
                 name="address.street"
@@ -195,7 +190,9 @@ export default function CreateRestaurantPage() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">Ville *</label>
+              <label className="block text-gray-700 font-bold mb-2">
+                Ville *
+              </label>
               <input
                 type="text"
                 name="address.city"
@@ -208,7 +205,9 @@ export default function CreateRestaurantPage() {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-bold mb-2">Code postal *</label>
+              <label className="block text-gray-700 font-bold mb-2">
+                Code postal *
+              </label>
               <input
                 type="text"
                 name="address.zipcode"
