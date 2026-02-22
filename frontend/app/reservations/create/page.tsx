@@ -64,14 +64,7 @@ export default function CreateReservationPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between">
-          <Link href="/accueil" className="text-3xl font-bold text-orange-600">
-            RestaurantApp
-          </Link>
-        </div>
-      </nav>
+      
 
       <div className="max-w-2xl mx-auto py-12">
         <h1 className="text-4xl font-bold mb-8">Ajouter une réservation</h1>
